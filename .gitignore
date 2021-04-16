@@ -1,0 +1,7 @@
+./.git
+./Labs
+./Labs.rar
+./"Part3 public.pdf"
+./src/venv/*
+./src/.idea
+./src/*.xlsx
