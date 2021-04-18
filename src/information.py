@@ -17,24 +17,25 @@ class Information:
 	def clear(self):
 		self._students.clear()
 
-	def load(self, npass, fname, lname, patronymic, subject, score, total_score_100, total_score_5):
+	def load(self, npass, ngroup, fname, lname, patronymic, subject, score, total_score_100, total_score_5):
 		try:
 			student = self.find(npass)
 		except ValueError:
-			student = self.add(npass)
+			student = self.add(npass, ngroup)
+
+		if student.ngroup != ngroup:
+			raise ValueError
 
 		student.load(fname, lname, patronymic, subject, score, total_score_100, total_score_5)
 
-	def add(self, npass) -> Student:
-		new_student = Student(npass)
+	def add(self, npass, ngroup) -> Student:
+		new_student = Student(npass, ngroup)
 		self._students.append(new_student)
 		return new_student
 
 	def find(self, npass) -> Student:
-		student = None
 		index = self._students.index(Student(npass))
 		student = self._students[index]
-
 		return student
 
 	def output(self, path, encoding):
