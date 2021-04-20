@@ -9,29 +9,50 @@ class Student:
     _compiled_pattern_fname = re.compile(r"^([\w`'\-][\w`'\- ]{,25}[\w`'\-])$")
     _compiled_pattern_lname = re.compile(r"^([\w`'\-][\w`'\- ]{,26}[\w`'\-])$")
     _compiled_pattern_patronymic = re.compile(r"^([\w`'\-][\w`'\- ]{,18}[\w`'\-])$")
-    _compiled_pattern_subject = re.compile(r"^(?<!\s)([\w\"\-][\w\"\- ]{2,54}[\w\"\-])(?!\s)$")
     _compiled_pattern_ngroup = re.compile(r"^(?<!\s)([\w0-9\-]{1,3})(?!\s)$")
     _compiled_pattern_npass = re.compile(r"^(?<!\s)([0-9]{7})(?!\s)$")
 
-    def __init__(self, npass, ngroup=None):
-        self._npass: str = npass
-        self._ngroup: str = ngroup
-        self._fname: str = None
-        self._lname: str = None
-        self._patronymic: str = None
+    def __init__(self, npass, ngroup=None, fname=None, lname=None, patronymic=None):
+        if not self._check_npass(npass):
+            raise ValueError
+
+        if ngroup is not None and not self._check_ngroup(ngroup):
+            raise ValueError
+
+        if fname is not None and not self._check_fname(fname):
+            raise ValueError
+
+        if lname is not None and not self._check_lname(lname):
+            raise ValueError
+
+        if patronymic is not None and not self._check_patronymic(patronymic):
+            raise ValueError
+
+        self._npass = npass
+        self._ngroup = ngroup
+        self._fname = fname
+        self._lname = lname
+        self._patronymic = patronymic
         self._exams = []
 
     def __eq__(self, other):
         return self._npass == other.npass
 
     def __repr__(self):
-        return f"{self.__class__.__name__}{self._npass, self._fname, self._lname, self._patronymic, self._exams}"
+        return f"{self.__class__.__name__}{self._npass, self._fname, self._lname, self._patronymic}"
 
-    def load(self, fname, lname, patronymic, subject, score, total_score_100, total_score_5):
-        self._fname = fname
-        self._lname = lname
-        self._patronymic = patronymic
+    def __iter__(self):
+        self._index = 0
+        return self
 
+    def __next__(self):
+        if self._index >= len(self._exams):
+            raise StopIteration
+        exam = self._exams[self._index]
+        self._index += 1
+        return exam
+
+    def load(self, subject, score, total_score_100, total_score_5):
         try:
             exam = self.find(subject)
         except ValueError:
@@ -98,17 +119,6 @@ class Student:
         has_no_underscore = Student._compiled_pattern_has_nums.search(patronymic) is None
 
         return main_check and has_no_nums and has_no_underscore or (len(patronymic) == 1 and not patronymic.isspace())
-
-
-    def _check_subject(self, subject):
-        if not isinstance(subject, str):
-            raise ValueError
-
-        main_check = Student._compiled_pattern_subject.fullmatch(subject) is not None
-        has_no_nums = Student._compiled_pattern_has_nums.search(subject) is None
-        has_no_underscore = Student._compiled_pattern_has_nums.search(subject) is None
-
-        return main_check and has_no_nums and has_no_underscore
 
     def _check_ngroup(self, ngroup):
         if not isinstance(ngroup, str):
