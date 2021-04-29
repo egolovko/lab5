@@ -1,5 +1,6 @@
 import csv
 
+
 class Builder:
 
     def __init__(self):
@@ -32,14 +33,14 @@ class Builder:
         with storage as st:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
+
                 if len(row) == 0:
                     continue
 
                 self._line = row
                 self._prepare_current_line()
-                print(self._line)
-                st.load(self._npass, self._ngroup, self._fname, self._lname, self._patronymic,
-                        self._subject, self._score, self._total_score_100, self._total_score_5)
+                st.load(self._ngroup, self._subject, self._lname, self._total_score_100, self._score,
+                        self._fname, self._total_score_5, self._patronymic, self._npass)
 
     def _prepare_current_line(self):
 
