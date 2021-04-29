@@ -8,15 +8,15 @@ from loading_exception import LoadingException
 
 def load(storage, csv_file, json_file, encoding):
     print(f"input-csv {csv_file}:", end=" ")
-    data = load_data(storage, csv_file, encoding)
+    load_data(storage, csv_file, encoding)
     print("OK")
 
     print(f"input-json {json_file}:", end=" ")
     stat = load_stat(json_file, encoding)
     print("OK")
 
-    print(f"json?=csv: OK", end=" ")
-    if not fit(data, stat):
+    print(f"json?=csv:", end=" ")
+    if not fit(Information.get_instance(), stat):
         raise LoadingException(f"Comparation error")
     print("OK")
 
@@ -36,8 +36,6 @@ def load_data(storage, path, encoding="utf-8"):
         builder = Builder()
         builder.load(storage, data_file)
 
-    raise LoadingException("implementation error")
-
 
 def load_stat(path, encoding="utf-8"):
     with open(path, 'r', encoding=encoding) as stat_file:
@@ -54,7 +52,8 @@ def load_stat(path, encoding="utf-8"):
 
 
 def fit(storage: Information, stat: object):
-    return storage.records_count == stat["total_records_count"] and storage.scores_100_count == stat["count_rating_100"]
+    return storage.records_count == stat["total_records_count"] \
+           and storage.scores_100_count == stat["count_rating_100"]
 
 
 def _check_ini_structure(data):
@@ -90,12 +89,12 @@ def _check_stat_values(data: object):
     total_records_count = data["загальна кiлькiсть записiв"]
     count_rating_100 = data["кiлькiсть оцiнок 100"]
 
-    return total_records_count.isdigit() and count_rating_100.isdigit()
+    return isinstance(total_records_count, int) and isinstance(count_rating_100, int)
 
 
 if __name__ == "__main__":
     from information import Information
+
     with open("data.csv", "r") as f:
         builder = Builder()
         builder.load(Information.get_instance(), f)
-
