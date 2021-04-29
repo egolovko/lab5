@@ -1,7 +1,5 @@
 import re
 
-from exam import Exam
-
 
 class Student:
     _compiled_pattern_has_nums = re.compile(r"[0-9]+")
@@ -12,63 +10,27 @@ class Student:
     _compiled_pattern_ngroup = re.compile(r"^(?<!\s)([\w0-9\-]{1,3})(?!\s)$")
     _compiled_pattern_npass = re.compile(r"^(?<!\s)([0-9]{7})(?!\s)$")
 
-    def __init__(self, npass, ngroup=None, fname=None, lname=None, patronymic=None):
+    def __init__(self, npass, ngroup=None):
         if not self._check_npass(npass):
             raise ValueError
 
         if ngroup is not None and not self._check_ngroup(ngroup):
             raise ValueError
 
-        if fname is not None and not self._check_fname(fname):
-            raise ValueError
-
-        if lname is not None and not self._check_lname(lname):
-            raise ValueError
-
-        if patronymic is not None and not self._check_patronymic(patronymic):
-            raise ValueError
-
         self._npass = npass
         self._ngroup = ngroup
-        self._fname = fname
-        self._lname = lname
-        self._patronymic = patronymic
-        self._exams = []
+        self._fname = None
+        self._lname = None
+        self._patronymic = None
+        self._score = None
+        self._total_score_100 = None
+        self._total_score_5 = None
 
     def __eq__(self, other):
         return self._npass == other.npass
 
     def __repr__(self):
         return f"{self.__class__.__name__}{self._npass, self._fname, self._lname, self._patronymic}"
-
-    def __iter__(self):
-        self._index = 0
-        return self
-
-    def __next__(self):
-        if self._index >= len(self._exams):
-            raise StopIteration
-        exam = self._exams[self._index]
-        self._index += 1
-        return exam
-
-    def load(self, subject, score, total_score_100, total_score_5):
-        try:
-            exam = self.find(subject)
-        except ValueError:
-            exam = self.add(subject)
-
-        exam.load(score, total_score_100, total_score_5)
-
-    def find(self, subject):
-        index = self._exams.index(Exam(subject))
-        exam = self._exams[index]
-        return exam
-
-    def add(self, subject):
-        new_exam = Exam(subject)
-        self._exams.append(new_exam)
-        return new_exam
 
     @property
     def npass(self):
@@ -89,6 +51,38 @@ class Student:
     @property
     def patronymic(self):
         return self._patronymic
+
+    @property
+    def score(self):
+        return self._score
+
+    @property
+    def total_score_100(self):
+        return self._total_score_100
+
+    @property
+    def total_score_5(self):
+        return self._total_score_5
+
+    def load(self, score, total_score_100, total_score_5, lname, fname, patronymic):
+        if not self._check_numerical_fileds(score, total_score_100, total_score_5):
+            raise ValueError
+
+        if fname is not None and not self._check_fname(fname):
+            raise ValueError
+
+        if lname is not None and not self._check_lname(lname):
+            raise ValueError
+
+        if patronymic is not None and not self._check_patronymic(patronymic):
+            raise ValueError
+
+        self._score = score
+        self._total_score_100 = total_score_100
+        self._total_score_5 = total_score_5
+        self._lname = lname
+        self._fname = fname
+        self._patronymic = patronymic
 
     def _check_fname(self, fname):
         if not isinstance(fname, str):
@@ -136,6 +130,53 @@ class Student:
         main_check = Student._compiled_pattern_npass.fullmatch(npass) is not None
 
         return main_check
+
+    def _check_numerical_fileds(self, score, total_score_100, total_score_5):
+        if not self._check_score(score):
+            return False
+
+        if not self._check_total_score_100(total_score_100):
+            return False
+
+        if not self._check_total_score_5(total_score_5):
+            return False
+
+        if not self._check_conformity(total_score_100, total_score_5, score):
+            return False
+
+        return True
+
+    def _check_score(self, score):
+        return isinstance(score, int) and (score == 0 or 24 <= score <= 40)
+
+    def _check_total_score_100(self, total_score_100):
+        return isinstance(total_score_100, int) and 0 <= total_score_100 <= 100
+
+    def _check_total_score_5(self, total_score_5):
+        return isinstance(total_score_5, int) and 0 <= total_score_5 <= 5
+
+    def _check_conformity(self, total_score_100, total_score_5, score):
+
+        if total_score_100 >= 90 and total_score_5 != 5:
+            return False
+
+        elif 75 <= total_score_100 <= 89 and total_score_5 != 4:
+            return False
+
+        elif 60 <= total_score_100 <= 74 and total_score_5 != 3:
+            return False
+
+        elif total_score_100 <= 59 and total_score_5 >= 3:
+            return False
+
+        if score < 24 and total_score_5 >= 3:
+            return False
+
+        semester_score = total_score_100 - score
+        if not (0 <= semester_score <= 60):
+            return False
+
+        return True
 
 
 if __name__ == "__main__":
