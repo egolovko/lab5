@@ -63,25 +63,43 @@ class Information:
             self._output(out_file)
 
     def _output(self, file):
-        result_data = self._get_resulted_dict()
-        for subject, info in result_data.items():
-            file.write(f"{subject}\t{info['mean']:.1f}\t{info['count_of_failed']}\n")
-            for student in info["exam"]:
+        result_data = self._get_subjects_list_with_max_mean()
+        for info in result_data:
+            file.write(f"{info['exam'].subject}\t{info['mean']:.1f}\t{info['count_of_failed']}\n")
+            for student in info["less_than_95"]:
                 file.write(f"\t{student.lname}\t{student.fname}\t{student.patronymic}\t{student.npass}\t{student.total_score_100}\t{student.total_score_5}\n")
 
-    def _get_resulted_dict(self):
-        result_data = {}
+    def _get_subjects_list_with_max_mean(self):
+        result_data = []
 
+        all_results = self._get_all_results()
+        max_mean = self._get_max_mean(all_results)
+        for info in all_results:
+            if info["mean"] == max_mean:
+                result_data.append(info)
+
+        return result_data
+
+    def _get_max_mean(self, all_results):
+        max_mean = all_results[0]["mean"]
+
+        for info in all_results:
+            if info["mean"] > max_mean:
+                max_mean = info["mean"]
+        return max_mean
+
+    def _get_all_results(self):
+        res = []
         for exam in self._exams:
-            result_data[exam.subject] = {
+            info = {
                 "exam": exam,
                 "mean": self._get_exam_mean_score(exam),
                 "count_of_failed": self._get_count_of_exam_failed(exam),
                 "less_than_95": self._get_less_than_95(exam)
             }
-            result_data[exam.subject]["less_than_95"].sort(key=lambda x: x.npass)
-
-        return result_data
+            info["less_than_95"].sort(key=lambda x: x.npass)
+            res.append(info)
+        return res
 
     def _get_exam_mean_score(self, exam):
         sm = 0
@@ -101,23 +119,6 @@ class Information:
         for student in exam:
             if student.total_score_100 < 95:
                 res.append(student)
+
         return res
 
-
-if __name__ == "__main__":
-    from builder import Builder
-
-    storage = Information.get_instance()
-    with open("data.csv", "r") as f:
-        builder = Builder()
-        builder.load(Information.get_instance(), f)
-
-    storage._students.sort(key=lambda stud: stud.npass)
-
-    for st in storage._students:
-        print(st)
-
-    print()
-    print()
-    print()
-    print(storage._get_resulted_dict())

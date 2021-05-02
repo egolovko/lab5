@@ -1,14 +1,4 @@
-Programming	62.0	3
-	Golovko	Eugene	Olegovych	0000000	100	5
-	Kirnis	Krisina	Sergiyivna	0000001	90	5
-	Miroslav	Grytsenko	Sergiyovich	0000666	45	2
-	Anya	Pilipenko	Maksymivna	6660000	30	1
-	Maksym	Litovchenko	Ruslanovich	0066600	45	2
-Calculus	48.3	2
-	Golovko	Eugene	Olegovych	0000000	95	5
-	Maksym	Litovchenko	Ruslanovich	0066600	30	2
-	Anya	Pilipenko	Maksymivna	6660000	20	1
-AlgebraGoometry	45.0	1
-	Maksym	Litovchenko	Ruslanovich	0066600	45	2
 UkrZarubKultura	88.0	0
+	Kterina	Antipova	Ruslanivna	0000002	88	4
+English	88.0	0
 	Kterina	Antipova	Ruslanivna	0000002	88	4

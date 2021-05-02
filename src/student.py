@@ -30,7 +30,8 @@ class Student:
         return self._npass == other.npass
 
     def __repr__(self):
-        return f"{self.__class__.__name__}{self._npass, self._fname, self._lname, self._patronymic}"
+        return f"{self.__class__.__name__}({self._npass}, {self._ngroup}, {self._fname}, {self._lname}, " + \
+               f"{self._patronymic}, {self._score}, {self._total_score_100}, {self.total_score_5})"
 
     @property
     def npass(self):
@@ -180,75 +181,7 @@ class Student:
 
 
 if __name__ == "__main__":
-    s = Student("123")
-    subjects = [
-        ("asdasd", 1),
-        ("asdd", 1),
-        ("  sd", 0),
-        ("asd   ", 0),
-        (" asd ", 0),
-        ("ASDD", 1),
-        ("as-d", 1),
-        ("as\"d", 1),
-        ("as\\'d", 0),
-        ("!asdasd", 0),
-        ("      ", 0),
-    ]
-    for word, status in subjects:
-        print(word, "\t", status, "\t", status == s._check_subject(word))
-
-    print()
-    print()
-
-    names = [
-        ("asdasd", 1),
-        ("  asdads", 0),
-        ("asdasd   ", 0),
-        ("asas dd", 1),
-        ("!asd!", 0),
-        ("s", 1),
-        (" ", 0),
-        ("      ", 0)
-    ]
-
-    for word, status in names:
-        print(word, status, status == s._check_fname(word))
-
-    print()
-    print()
-
-    gcodes = [
-        (" asd ", 0),
-        ("asd ", 0),
-        (" asd", 0),
-        ("a s", 0),
-        ("", 0),
-        ("asd", 1),
-        ("a_d", 0),
-        ("K12", 1),
-        ("R-3", 1)
-    ]
-
-    for word, status in gcodes:
-        print(word, status, status == s._check_ngroup(word))
-
-    print()
-    print()
-
-    ncodes = [
-        ("1234567", 1),
-        ("  12345", 0),
-        ("14567  ", 0),
-        ("12345678", 0),
-        ("123 567", 0),
-        ("1234a67", 0),
-        ("12345_7", 0)
-    ]
-
-    for word, status in ncodes:
-        print(word, status, status == s._check_npass(word))
-
-    print()
-    print()
-
+    s1 = Student("6660000", "L0X")
+    s2 = Student("0066600", "L0X")
+    print(sorted([s2, s1], key=lambda x: x.npass))
 
