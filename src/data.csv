@@ -1,12 +1,17 @@
 K12;Programming;Golovko;100;40;Eugene;5;Olegovych;0000000
 K12;Calculus;Golovko;95;35;Eugene;5;Olegovych;0000000
-LV1;Programming;Kirnis;90;35;Krisina;5;Sergiyivna;0000001
-
-L0X;AlgebraGoometry;Maksym;45;0;Litovchenko;2;Ruslanovich;0066600
+L0X;Programming;Anya;30;0;Pilipenko;1;Maksymivna;6660000
 L0X;Calculus;Maksym;30;0;Litovchenko;2;Ruslanovich;0066600
 L0X;Programming;Miroslav;45;0;Grytsenko;2;Sergiyovich;0000666
+LV1;Programming;Kirnis;90;35;Krisina;5;Sergiyivna;0000001
+T02;UkrZarubKultura;Kterina;88;37;Antipova;4;Ruslanivna;0000002
+
+L0X;AlgebraGoometry;Maksym;45;0;Litovchenko;2;Ruslanovich;0066600
+
+
 L0X;Calculus;Anya;20;0;Pilipenko;1;Maksymivna;6660000
-L0X;Programming;Anya;30;0;Pilipenko;1;Maksymivna;6660000
+
 L0X;Programming;Maksym;45;0;Litovchenko;2;Ruslanovich;0066600
 
-T02;UkrZarubKultura;Kterina;88;37;Antipova;4;Ruslanivna;0000002
+
+T02;English;Kterina;88;37;Antipova;4;Ruslanivna;0000002
