@@ -6,9 +6,9 @@ DESCRIPTION
     This program preapre the results of students taking the exams of the winter session.
 """
 
-import sys
 import loader
 
+from sys import argv
 from information import Information
 from loading_exception import LoadingException
 
@@ -53,4 +53,4 @@ def _main(args):
 
 
 if __name__ == "__main__":
-    _main(sys.argv)
+    _main(argv)
