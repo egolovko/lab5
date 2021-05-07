@@ -4,7 +4,7 @@ from student import Student
 
 
 class Exam:
-    _compiled_pattern_subject = re.compile(r"^(?<!\s)([\w\"\-][\w\"\- ]{2,54}[\w\"\-])(?!\s)$")
+    _compiled_pattern_subject = re.compile(r"^(?!\s)([\w\"\- ]{4,56})(?<!\s)$")
     _compiled_pattern_has_nums_and_underscore = re.compile(r"[0-9_]+")
 
     def __init__(self, subject):

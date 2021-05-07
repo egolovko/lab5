@@ -4,11 +4,11 @@ import re
 class Student:
     _compiled_pattern_has_nums = re.compile(r"[0-9]+")
     _compiled_pattern_has_underscore = re.compile(r"[_]+")
-    _compiled_pattern_fname = re.compile(r"^([\w`'\-][\w`'\- ]{,25}[\w`'\-])$")
-    _compiled_pattern_lname = re.compile(r"^([\w`'\-][\w`'\- ]{,26}[\w`'\-])$")
-    _compiled_pattern_patronymic = re.compile(r"^([\w`'\-][\w`'\- ]{,18}[\w`'\-])$")
-    _compiled_pattern_ngroup = re.compile(r"^(?<!\s)([\w0-9\-]{1,3})(?!\s)$")
-    _compiled_pattern_npass = re.compile(r"^(?<!\s)([0-9]{7})(?!\s)$")
+    _compiled_pattern_fname = re.compile(r"^(?!\s)([\w`'\- ]{,27})(?<!\s)$")
+    _compiled_pattern_lname = re.compile(r"^(?!\s)([\w`'\- ]{,28})(?<!\s)$")
+    _compiled_pattern_patronymic = re.compile(r"^(?!\s)([\w`'\- ]{,20})(?<!\s)$")
+    _compiled_pattern_ngroup = re.compile(r"^(?!\s)([\w\-]{1,3})(?<!\s)$")
+    _compiled_pattern_npass = re.compile(r"^(?!\s)([0-9]{7})(?<!\s)$")
 
     def __init__(self, npass, ngroup=None):
         if not self._check_npass(npass):
@@ -93,7 +93,7 @@ class Student:
         has_no_nums = Student._compiled_pattern_has_nums.search(fname) is None
         has_no_underscore = Student._compiled_pattern_has_nums.search(fname) is None
 
-        return main_check and has_no_nums and has_no_underscore or (len(fname) == 1 and not fname.isspace())
+        return main_check and has_no_nums and has_no_underscore
 
     def _check_lname(self, lname):
         if not isinstance(lname, str):
@@ -103,7 +103,7 @@ class Student:
         has_no_nums = Student._compiled_pattern_has_nums.search(lname) is None
         has_no_underscore = Student._compiled_pattern_has_underscore.search(lname) is None
 
-        return main_check and has_no_nums and has_no_underscore or (len(lname) == 1 and not lname.isspace())
+        return main_check and has_no_nums and has_no_underscore
 
     def _check_patronymic(self, patronymic):
         if not isinstance(patronymic, str):
@@ -113,7 +113,7 @@ class Student:
         has_no_nums = Student._compiled_pattern_has_nums.search(patronymic) is None
         has_no_underscore = Student._compiled_pattern_has_nums.search(patronymic) is None
 
-        return main_check and has_no_nums and has_no_underscore or (len(patronymic) == 1 and not patronymic.isspace())
+        return main_check and has_no_nums and has_no_underscore
 
     def _check_ngroup(self, ngroup):
         if not isinstance(ngroup, str):
@@ -179,9 +179,4 @@ class Student:
 
         return True
 
-
-if __name__ == "__main__":
-    s1 = Student("6660000", "L0X")
-    s2 = Student("0066600", "L0X")
-    print(sorted([s2, s1], key=lambda x: x.npass))
 
