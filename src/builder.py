@@ -3,8 +3,11 @@ import csv
 
 class Builder:
 
+    COUNT_OF_COLUMNS = 9
+
     def __init__(self):
         self._line = None
+
         self._npass = None
         self._ngroup = None
         self._fname = None
@@ -44,7 +47,7 @@ class Builder:
 
     def _prepare_current_line(self):
 
-        if len(self._line) < 9:
+        if len(self._line) < Builder.COUNT_OF_COLUMNS:
             raise ValueError
 
         self._convert_fields()
