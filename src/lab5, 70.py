@@ -42,6 +42,11 @@ def _main(args):
     except IndexError as ie:
         print("***** program aborted *****")
         print(ie)
+
+    except ValueError as ve:
+        print("UPS")
+        print("***** program aborted *****")
+        print(ve)
     except LoadingException as le:
         print("UPS")
         print("***** program aborted *****")
