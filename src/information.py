@@ -2,6 +2,18 @@ from exam import Exam
 
 
 class Information:
+    """
+    Contain information about exams.
+
+    Attributes
+    ----------
+    records_count : int
+        Count of records.
+
+    scores_100_count : int
+        Count of wtudents who have 100 by total score.
+    """
+
     _instance = None
 
     def __init__(self):
@@ -32,11 +44,70 @@ class Information:
         return self._scores_100_count
 
     def clear(self):
+        """
+        Reset class fields.
+        """
+
         self._records_count = 0
         self._scores_100_count = 0
         self._exams.clear()
 
     def load(self, ngroup, subject, lname, total_score_100, score, fname, total_score_5, patronymic, npass):
+        """
+        Finds the exam by the subject, if not exist - add.
+
+        Parameters
+        ----------
+        ngroup : str
+            The group code.
+            Іs non-empty string and consists of no more than 3 letters.
+            In addition to the letters of the alphabet, it can contain decimal numbers and a hyphen.
+
+        subject : str
+            Exam subject name.
+            Must have from 4 to 56 characters inclusive. In addition to the
+            letters of the alphabet, it can contain double quotes, spaces, and hyphens.
+
+        lname : str
+            Last name.
+            Can have up to 28 characters.
+            In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+
+        total_score_100 : int
+            Sum of points scored in the semester and in the exam.
+            Can not exceed 100 and must be positive.
+            The total score in points is the sum of points scored in the semester and in the exam.
+            The total score in points and on the state scale should be agreed with each other.
+
+        score : int
+            Exam scores. Can not exceed 40 and must be positive. The scores scored on the exam must be at
+            least 24 or equal to 0 (in the latter case, the assessment cannot be satisfactory).
+
+        fname: str
+            First name.
+            Can have up to 27 characters.
+            In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+
+        total_score_5 : int
+            The score on the state scale.
+            Can take values: 2-5 - as usual, 0 - did not appear, 1 - not allowed.
+            Grades 3-5 are considered satisfactory, the others - unsatisfactory. The points are whole and integral.
+
+        patronymic : str
+            Patronymic.
+            Can have up to 20 characters.
+            In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+
+        npass : str
+            The record book number.
+            Uniquely identifies the student and consists of 7 decimal digits.
+
+        Raises
+        ------
+        ValueError
+            Incorrect data.
+        """
+
         try:
             exam = self.find(subject)
         except ValueError:
@@ -49,16 +120,63 @@ class Information:
             self._scores_100_count += 1
 
     def find(self, subject):
+        """
+        Finds the exma by the subject name.
+
+        Parameters
+        ----------
+        subject : str
+            Exam subject name.
+            Must have from 4 to 56 characters inclusive. In addition to the
+            letters of the alphabet, it can contain double quotes, spaces, and hyphens.
+
+        Raises
+        ------
+        ValueError
+            Exam not with this subject name not in exist.
+
+        Returns
+        -------
+        Exam
+            Exam with this subject name.
+        """
         index = self._exams.index(Exam(subject))
         exam = self._exams[index]
         return exam
 
     def add(self, subject):
+        """
+        Add exam with this subject name.
+
+        Parameters
+        ----------
+        subject : str
+            Exam subject name.
+            Must have from 4 to 56 characters inclusive. In addition to the
+            letters of the alphabet, it can contain double quotes, spaces, and hyphens.
+
+        Returns
+        -------
+        Exam
+            Added exam.
+        """
         new_exam = Exam(subject)
         self._exams.append(new_exam)
         return new_exam
 
     def output(self, path, encoding="utf-8"):
+        """
+        Save prepared information in file.
+
+        Parameters
+        ----------
+        path : str
+            Path to file.
+
+        encoding : str
+            File encoding.
+            Default utf-8.
+        """
         with open(path, "w", encoding=encoding) as out_file:
             self._output(out_file)
 
@@ -67,7 +185,8 @@ class Information:
         for info in result_data:
             file.write(f"{info['exam'].subject}\t{info['mean']:.1f}\t{info['count_of_failed']}\n")
             for student in info["less_than_95"]:
-                file.write(f"\t{student.lname}\t{student.fname}\t{student.patronymic}\t{student.npass}\t{student.total_score_100}\t{student.total_score_5}\n")
+                file.write(f"\t{student.lname}\t{student.fname}\t{student.patronymic}\t{student.npass}" +
+                           f"\t{student.total_score_100}\t{student.total_score_5}\n")
 
     def _get_subjects_list_with_max_mean(self):
         result_data = []

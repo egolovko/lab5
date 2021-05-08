@@ -1,12 +1,33 @@
 import json
-import csv
 
-from information import Information
 from builder import Builder
-from loading_exception import LoadingException
 
 
-def load(storage, csv_file, json_file, encoding):
+def load(storage, csv_file, json_file, encoding="utf-8"):
+    """
+    Load the main, additional file and checks their content.
+
+    Parameters
+    ----------
+    storage : information.Information
+        Storage in which data from csv file will be added.
+
+    csv_file : str
+        Path to csv file with main data.
+
+    json_file : json
+        Path to json file with statistics info.
+
+    encoding : str
+        Files encoding.
+        Default utf-8.
+
+    Raises
+    ------
+    ValueError
+        Incorrect data
+    """
+
     print(f"input-csv {csv_file}:", end=" ")
     load_data(storage, csv_file, encoding)
     print("OK")
@@ -16,44 +37,124 @@ def load(storage, csv_file, json_file, encoding):
     print("OK")
 
     print(f"json?=csv:", end=" ")
-    if not fit(Information.get_instance(), stat):
-        raise LoadingException(f"Comparation error")
+    if not fit(storage, stat):
+        raise ValueError(f"Comparation error")
     print("OK")
 
 
 def load_ini(path):
+    """
+    Load the settings file.
+
+    Parameters
+    ----------
+    path : str
+        Path to file
+
+    Raises
+    ------
+    ValueError
+        Incorrect data
+
+    Returns
+    -------
+    dict
+        Dictionary with settings data
+    """
+
     with open(path, "r") as ini_file:
         data = json.load(ini_file)
 
     if not _check_ini_structure(data):
-        raise LoadingException(f"incorrect data format in ini file")
+        raise ValueError(f"incorrect data format in ini file")
 
     return data
 
 
 def load_data(storage, path, encoding="utf-8"):
+    """
+    Load the csv file with main data.
+
+    Parameters
+    ----------
+    storage : information.Information
+        Storage in which data from csv file will be added.
+
+    path : str
+        Path to file.
+
+    encoding : str
+        File encoding.
+        Default utf-8.
+
+    Raises
+    ------
+    ValueError
+        Incorrect data
+    """
+
     with open(path, "r", encoding=encoding) as data_file:
         builder = Builder()
         builder.load(storage, data_file)
 
 
 def load_stat(path, encoding="utf-8"):
+    """
+    Load the additional file with statistics.
+
+    Parameters
+    ----------
+    path : str
+        Path to file.
+
+    encoding : str
+        File encoding.
+        Default utf-8.
+
+    Raises
+    ------
+    ValueError
+        Incorrect data
+
+    Returns
+    -------
+    Dict
+        Dictionary with statistics data
+    """
+
     with open(path, 'r', encoding=encoding) as stat_file:
         data = json.load(stat_file)
 
     if not _check_stat_structure(data):
-        raise LoadingException(f"incorrect data format in stat file")
+        raise ValueError(f"incorrect data format in stat file")
 
     if not _check_stat_values(data):
-        raise LoadingException(f"incorrect data format in stat file")
+        raise ValueError(f"incorrect data format in stat file")
 
     prepared_data = _prepare_stat(data)
     return prepared_data
 
 
-def fit(storage: Information, stat: object):
-    return storage.records_count == stat["total_records_count"] \
-           and storage.scores_100_count == stat["count_rating_100"]
+def fit(storage, stat):
+    """
+    Check content in storage and stat file.
+
+    Parameters
+    ----------
+    storage : information.Information
+        Storage with processed information
+
+    stat : dict
+        Dictionary with statistics
+
+    Returns
+    -------
+    bool
+        True if equals, else False
+    """
+
+    return storage.records_count == stat["total_records_count"] and \
+           storage.scores_100_count == stat["count_rating_100"]
 
 
 def _check_ini_structure(data):
@@ -90,11 +191,3 @@ def _check_stat_values(data: object):
     count_rating_100 = data["кiлькiсть оцiнок 100"]
 
     return isinstance(total_records_count, int) and isinstance(count_rating_100, int)
-
-
-if __name__ == "__main__":
-    from information import Information
-
-    with open("data.csv", "r") as f:
-        builder = Builder()
-        builder.load(Information.get_instance(), f)

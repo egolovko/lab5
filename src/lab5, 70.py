@@ -10,10 +10,17 @@ import loader
 
 from sys import argv
 from information import Information
-from loading_exception import LoadingException
 
 
-def process(init_file_path: str) -> None:
+def process(init_file_path):
+    """
+    Reads the settings file and performs processing.
+
+    Parameters
+    ----------
+    init_file_path : str
+        Path to ini settings file.
+    """
 
     storage = Information.get_instance()
 
@@ -25,14 +32,15 @@ def process(init_file_path: str) -> None:
         storage,
         config["input"]["csv"],
         config["input"]["json"],
-        config["input"]["encoding"])
+        config["input"]["encoding"]
+    )
 
     print(f"output {config['output']['fname']}:", end=" ")
     storage.output(config["output"]["fname"], config["output"]["encoding"])
     print("OK")
 
 
-def _main(args):
+def _main(args: list):
     print(f"This program preapre the results of students taking the exams of the winter session.")
     print("This program is coded by Holovko Eugene, K-12.")
     print("*****")
@@ -42,19 +50,10 @@ def _main(args):
     except IndexError as ie:
         print("***** program aborted *****")
         print(ie)
-
-    except ValueError as ve:
+    except (ValueError, ValueError) as exc:
         print("UPS")
         print("***** program aborted *****")
-        print(ve)
-    except LoadingException as le:
-        print("UPS")
-        print("***** program aborted *****")
-        print(le)
-    except FileNotFoundError as fnfe:
-        print("UPS")
-        print("***** program aborted *****")
-        print(fnfe)
+        print(exc)
 
 
 if __name__ == "__main__":

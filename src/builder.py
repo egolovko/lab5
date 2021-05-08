@@ -2,6 +2,14 @@ import csv
 
 
 class Builder:
+    """
+    Reads lines of the file, analyzes empty and "missing" those that have the wrong number of fields.
+
+    Attributes
+    ----------
+    COUNT_OF_COLUMNS : int
+        Count of column that must be read from input file.
+    """
 
     COUNT_OF_COLUMNS = 9
 
@@ -19,6 +27,10 @@ class Builder:
         self._total_score_5 = None
 
     def reset(self):
+        """
+        Reset builder state.
+        """
+
         self._line = None
         self._npass = None
         self._ngroup = None
@@ -31,6 +43,24 @@ class Builder:
         self._total_score_5 = None
 
     def load(self, storage, file):
+        """
+        Loads the main file; downloads an additional file;
+        checks the correspondence of the information of the main and additional files.
+
+        Parameters
+        ----------
+        storage : information.Information
+            Storage where processed lines will be added.
+
+        file : IO
+            Binary file.
+
+        Raises
+        ------
+        ValueError
+            Invalid input data in file.
+        """
+
         storage.clear()
 
         with storage as st:

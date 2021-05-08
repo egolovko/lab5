@@ -2,6 +2,68 @@ import re
 
 
 class Student:
+    """
+    Information about student.
+
+    Parameters
+    ----------
+    npass : str
+        The record book number.
+        Uniquely identifies the student and consists of 7 decimal digits.
+
+    ngroup : str
+        The group code.
+        Іs non-empty string and consists of no more than 3 letters.
+        In addition to the letters of the alphabet, it can contain decimal numbers and a hyphen.
+
+    Attributes
+    ----------
+    npass : str
+        The record book number.
+        Uniquely identifies the student and consists of 7 decimal digits.
+
+    ngroup : str
+        The group code.
+        Іs non-empty string and consists of no more than 3 letters.
+        In addition to the letters of the alphabet, it can contain decimal numbers and a hyphen.
+
+    fname: str
+        First name.
+        Can have up to 27 characters.
+        In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+
+    lname : str
+        Last name.
+        Can have up to 28 characters.
+        In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+    
+    patronymic : str
+        Patronymic.
+        Can have up to 20 characters.
+        In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+
+    score : int
+        Exam scores. Can not exceed 40 and must be positive. The scores scored on the exam must be at
+        least 24 or equal to 0 (in the latter case, the assessment cannot be satisfactory).
+
+
+    total_score_100 : int
+        Sum of points scored in the semester and in the exam.
+        Can not exceed 100 and must be positive.
+        The total score in points is the sum of points scored in the semester and in the exam.
+        The total score in points and on the state scale should be agreed with each other.
+
+    total_score_5 : int
+        The score on the state scale.
+        Can take values: 2-5 - as usual, 0 - did not appear, 1 - not allowed.
+        Grades 3-5 are considered satisfactory, the others - unsatisfactory. The points are whole and integral.
+
+    Raises
+    ------
+    ValueError
+        Incorrect npass or ngroup parameter
+    """
+
     _compiled_pattern_has_nums = re.compile(r"[0-9]+")
     _compiled_pattern_has_underscore = re.compile(r"[_]+")
     _compiled_pattern_fname = re.compile(r"^(?!\s)([\w`'\- ]{,27})(?<!\s)$")
@@ -66,6 +128,48 @@ class Student:
         return self._total_score_5
 
     def load(self, score, total_score_100, total_score_5, lname, fname, patronymic):
+        """
+        Load information about student
+
+        Parameters
+        ----------
+        score : int
+            Exam scores. Can not exceed 40 and must be positive. The scores scored on the exam must be at
+            least 24 or equal to 0 (in the latter case, the assessment cannot be satisfactory).
+
+
+        total_score_100 : int
+            Sum of points scored in the semester and in the exam.
+            Can not exceed 100 and must be positive.
+            The total score in points is the sum of points scored in the semester and in the exam.
+            The total score in points and on the state scale should be agreed with each other.
+
+        total_score_5 : int
+            The score on the state scale.
+            Can take values: 2-5 - as usual, 0 - did not appear, 1 - not allowed.
+            Grades 3-5 are considered satisfactory, the others - unsatisfactory. The points are whole and integral.
+
+        fname: str
+            First name.
+            Can have up to 27 characters.
+            In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+
+        lname : str
+            Last name.
+            Can have up to 28 characters.
+            In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+
+        patronymic : str
+            Patronymic.
+            Can have up to 20 characters.
+            In addition to the letters of the alphabet, they can contain an apostrophe, a hyphen, and a space.
+
+        Raises
+        ------
+        ValueError
+            Incorrect data
+        """
+
         if not self._check_numerical_fileds(score, total_score_100, total_score_5):
             raise ValueError
 
