@@ -21,19 +21,18 @@ class Information:
         self._records_count = 0
         self._scores_100_count = 0
 
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = object.__new__(cls, *args)
+
+        return cls._instance
+
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if exc_type is not None:
             self.clear()
-
-    @staticmethod
-    def get_instance():
-        if Information._instance is None:
-            Information._instance = Information()
-
-        return Information._instance
 
     @property
     def records_count(self):

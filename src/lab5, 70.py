@@ -22,7 +22,7 @@ def process(init_file_path):
         Path to ini settings file.
     """
 
-    storage = Information.get_instance()
+    storage = Information()
 
     print(f"ini {init_file_path}:", end=" ")
     config = loader.load_ini(init_file_path)
