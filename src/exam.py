@@ -172,7 +172,7 @@ class Exam:
 
     def _check_subject(self, subject):
         if not isinstance(subject, str):
-            raise ValueError
+            return False
 
         main_check = Exam._compiled_pattern_subject.fullmatch(subject) is not None
         has_no_nums_and_udnerscore = Exam._compiled_pattern_has_nums_and_underscore.search(subject) is None

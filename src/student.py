@@ -191,7 +191,7 @@ class Student:
 
     def _check_fname(self, fname):
         if not isinstance(fname, str):
-            raise ValueError
+            return False
 
         main_check = Student._compiled_pattern_fname.fullmatch(fname) is not None
         has_no_nums = Student._compiled_pattern_has_nums.search(fname) is None
@@ -201,7 +201,7 @@ class Student:
 
     def _check_lname(self, lname):
         if not isinstance(lname, str):
-            raise ValueError
+            return False
 
         main_check = Student._compiled_pattern_fname.fullmatch(lname) is not None
         has_no_nums = Student._compiled_pattern_has_nums.search(lname) is None
@@ -211,7 +211,7 @@ class Student:
 
     def _check_patronymic(self, patronymic):
         if not isinstance(patronymic, str):
-            raise ValueError
+            return False
 
         main_check = Student._compiled_pattern_fname.fullmatch(patronymic) is not None
         has_no_nums = Student._compiled_pattern_has_nums.search(patronymic) is None
@@ -221,7 +221,7 @@ class Student:
 
     def _check_ngroup(self, ngroup):
         if not isinstance(ngroup, str):
-            raise ValueError
+            return False
 
         main_check = Student._compiled_pattern_ngroup.fullmatch(ngroup) is not None
         has_no_underscore = Student._compiled_pattern_has_underscore.search(ngroup) is None
@@ -230,7 +230,7 @@ class Student:
 
     def _check_npass(self, npass):
         if not isinstance(npass, str):
-            raise ValueError
+            return False
 
         main_check = Student._compiled_pattern_npass.fullmatch(npass) is not None
 
