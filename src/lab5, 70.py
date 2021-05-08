@@ -50,7 +50,7 @@ def _main(args: list):
     except IndexError as ie:
         print("***** program aborted *****")
         print(ie)
-    except (ValueError, ValueError) as exc:
+    except (ValueError, ValueError, KeyboardInterrupt) as exc:
         print("UPS")
         print("***** program aborted *****")
         print(exc)
