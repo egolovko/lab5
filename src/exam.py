@@ -39,17 +39,17 @@ class Exam:
     def __eq__(self, other):
         return self._subject == other.subject
 
-    def __iter__(self):
-        self._i = 0
-        return self
-
     def __len__(self):
         return len(self._students)
 
+    def __iter__(self):
+        self.__i = 0
+        return self
+
     def __next__(self):
-        if self._i < len(self._students):
-            temp = self._students[self._i]
-            self._i += 1
+        if self.__i < len(self._students):
+            temp = self._students[self.__i]
+            self.__i += 1
             return temp
         raise StopIteration
 
