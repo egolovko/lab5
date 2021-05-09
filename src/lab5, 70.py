@@ -3,10 +3,10 @@ NAME
     Lab5, 70
 
 DESCRIPTION
-    This program preapre the results of students taking the exams of the winter session.
+    This program prepare the results of students taking the exams of the winter session.
 """
 
-import loader
+import loader_writer
 
 from sys import argv
 from information import Information
@@ -25,10 +25,10 @@ def process(init_file_path):
     storage = Information()
 
     print(f"ini {init_file_path}:", end=" ")
-    config = loader.load_ini(init_file_path)
+    config = loader_writer.load_ini(init_file_path)
     print("OK")
 
-    loader.load(
+    loader_writer.load(
         storage,
         config["input"]["csv"],
         config["input"]["json"],
@@ -36,12 +36,12 @@ def process(init_file_path):
     )
 
     print(f"output {config['output']['fname']}:", end=" ")
-    storage.output(config["output"]["fname"], config["output"]["encoding"])
+    loader_writer.output(storage, config["output"]["fname"], config["output"]["encoding"])
     print("OK")
 
 
-def _main(args: list):
-    print(f"This program preapre the results of students taking the exams of the winter session.")
+def _main(args):
+    print(f"This program prepare the results of students taking the exams of the winter session.")
     print("This program is coded by Holovko Eugene, K-12.")
     print("*****")
 
