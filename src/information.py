@@ -11,7 +11,7 @@ class Information:
         Count of records.
 
     scores_100_count : int
-        Count of wtudents who have 100 by total score.
+        Count of students who have 100 by total score.
     """
 
     _instance = None
