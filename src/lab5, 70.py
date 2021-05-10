@@ -12,20 +12,11 @@ from sys import argv
 from information import Information
 
 
-def process(init_file_path):
-    """
-    Reads the settings file and performs processing.
-
-    Parameters
-    ----------
-    init_file_path : str
-        Path to ini settings file.
-    """
-
+def _process(file_path):
     storage = Information()
 
-    print(f"ini {init_file_path}:", end=" ")
-    config = loader_writer.load_ini(init_file_path)
+    print(f"ini {file_path}:", end=" ")
+    config = loader_writer.load_ini(file_path)
     print("OK")
 
     loader_writer.load(
@@ -40,6 +31,31 @@ def process(init_file_path):
     print("OK")
 
 
+def process(file_path):
+    """
+    Reads the settings file and performs processing.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to ini settings file.
+
+    Raises
+    ------
+    ValueError
+        Incorrect data
+
+    KeyboardInterrupt
+        The program was stopped by the user
+    """
+
+    try:
+        _process(file_path)
+    except (ValueError, KeyboardInterrupt) as exc:
+        print("UPS")
+        raise exc
+
+
 def _main(args):
     print(f"This program prepare the results of students taking the exams of the winter session.")
     print("This program is coded by Holovko Eugene, K-12.")
@@ -47,11 +63,7 @@ def _main(args):
 
     try:
         process(args[1])
-    except IndexError as ie:
-        print("***** program aborted *****")
-        print(ie)
-    except (ValueError, ValueError, KeyboardInterrupt) as exc:
-        print("UPS")
+    except (IndexError, ValueError, KeyboardInterrupt) as exc:
         print("***** program aborted *****")
         print(exc)
 
