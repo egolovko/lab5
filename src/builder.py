@@ -52,7 +52,7 @@ class Builder:
         storage : information.Information
             Storage where processed lines will be added.
 
-        file : IO
+        file : io.TextIOWrapper
             Binary file.
 
         Raises
