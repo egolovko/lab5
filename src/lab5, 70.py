@@ -50,11 +50,14 @@ def process(file_path):
 
     KeyboardInterrupt
         The program was stopped by the user
+
+    FileNotFoundError:
+        File not exist
     """
 
     try:
         _process(file_path)
-    except (ValueError, KeyboardInterrupt) as exc:
+    except (ValueError, KeyboardInterrupt, FileNotFoundError) as exc:
         print("UPS")
         raise exc
 
@@ -66,7 +69,7 @@ def _main(args):
 
     try:
         process(args[1])
-    except (IndexError, ValueError, KeyboardInterrupt) as exc:
+    except (IndexError, ValueError, KeyboardInterrupt, FileNotFoundError) as exc:
         print("***** program aborted *****")
         print(exc)
 
