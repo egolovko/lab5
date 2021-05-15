@@ -4,6 +4,9 @@ NAME
 
 DESCRIPTION
     This module contain class Student, that contain information about student.
+
+AUTHOR
+    Holovko Eugene
 """
 
 import re

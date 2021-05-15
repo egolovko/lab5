@@ -4,6 +4,9 @@ NAME
 
 DESCRIPTION
     This program prepare the results of students taking the exams of the winter session.
+
+AUTHOR
+    Holovko Eugene
 """
 
 import loader_writer

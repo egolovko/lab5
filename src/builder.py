@@ -4,6 +4,9 @@ NAME
 
 DESCRIPTION
     This module contain class Builder, that allow the user to build storage class by file with data.
+
+AUTHOR
+    Holovko Eugene
 """
 
 import csv

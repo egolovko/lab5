@@ -5,6 +5,9 @@ NAME
 DESCRIPTION
     This module contain class Exam, that contain information about subject
     and about the students who took this subject.
+
+AUTHOR
+    Holovko Eugene
 """
 
 

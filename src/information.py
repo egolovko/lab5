@@ -4,6 +4,9 @@ NAME
 
 DESCRIPTION
     This module contain class Information, that contain information about exams.
+
+AUTHOR
+    Holovko Eugene
 """
 
 from exam import Exam

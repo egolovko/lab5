@@ -5,6 +5,9 @@ NAME
 DESCRIPTION
     This module contain functions for reading, saving data from file
     and outputting prepared information to file
+
+AUTHOR
+    Holovko Eugene
 """
 
 import json
