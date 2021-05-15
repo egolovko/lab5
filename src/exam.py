@@ -23,8 +23,7 @@ class Exam:
         Incorrect subject parameter
     """
 
-    _compiled_pattern_subject = re.compile(r"^(?!\s)([\w\"\- ]{4,56})(?<!\s)$")
-    _compiled_pattern_has_nums_and_underscore = re.compile(r"[0-9_]+")
+    _COMPILED_PATTERN_SUBJECT = re.compile(r"^(?!\s)(((?![\d_])[\w\"\- ]){4,56})(?<!\s)$")
 
     def __init__(self, subject):
         if not self._check_subject(subject):
@@ -174,9 +173,8 @@ class Exam:
         if not isinstance(subject, str):
             return False
 
-        main_check = Exam._compiled_pattern_subject.fullmatch(subject) is not None
-        has_no_nums_and_udnerscore = Exam._compiled_pattern_has_nums_and_underscore.search(subject) is None
+        main_check = Exam._COMPILED_PATTERN_SUBJECT.fullmatch(subject) is not None
 
-        return main_check and has_no_nums_and_udnerscore
+        return main_check
 
 

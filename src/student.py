@@ -64,13 +64,11 @@ class Student:
         Incorrect npass or ngroup parameter
     """
 
-    _compiled_pattern_has_nums = re.compile(r"[0-9]+")
-    _compiled_pattern_has_underscore = re.compile(r"[_]+")
-    _compiled_pattern_fname = re.compile(r"^(?!\s)([\w`'\- ]{,27})(?<!\s)$")
-    _compiled_pattern_lname = re.compile(r"^(?!\s)([\w`'\- ]{,28})(?<!\s)$")
-    _compiled_pattern_patronymic = re.compile(r"^(?!\s)([\w`'\- ]{,20})(?<!\s)$")
-    _compiled_pattern_ngroup = re.compile(r"^(?!\s)([\w\-]{1,3})(?<!\s)$")
-    _compiled_pattern_npass = re.compile(r"^(?!\s)([0-9]{7})(?<!\s)$")
+    _COMPILED_PATTERN_FNAME = re.compile(r"^(?!\s)(((?![\d_])[\w`'\- ]){1,27})(?<!\s)$")
+    _COMPILED_PATTERN_LNAME = re.compile(r"^(?!\s)(((?![\d_])[\w`'\- ]){1,28})(?<!\s)$")
+    _COMPILED_PATTERN_PATRONYMIC = re.compile(r"^(?!\s)(((?![\d_])[\w`'\- ]){1,20})(?<!\s)$")
+    _COMPILED_PATTERN_NGROUP = re.compile(r"^(?!\s)(((?![_])[\w\-]){1,3})(?<!\s)$")
+    _COMPILED_PATTERN_NPASS = re.compile(r"^(?!\s)([\d]{7})(?<!\s)$")
 
     def __init__(self, npass, ngroup=None):
         if not self._check_npass(npass):
@@ -193,46 +191,39 @@ class Student:
         if not isinstance(fname, str):
             return False
 
-        main_check = Student._compiled_pattern_fname.fullmatch(fname) is not None
-        has_no_nums = Student._compiled_pattern_has_nums.search(fname) is None
-        has_no_underscore = Student._compiled_pattern_has_nums.search(fname) is None
+        main_check = Student._COMPILED_PATTERN_FNAME.fullmatch(fname) is not None
 
-        return main_check and has_no_nums and has_no_underscore
+        return main_check
 
     def _check_lname(self, lname):
         if not isinstance(lname, str):
             return False
 
-        main_check = Student._compiled_pattern_fname.fullmatch(lname) is not None
-        has_no_nums = Student._compiled_pattern_has_nums.search(lname) is None
-        has_no_underscore = Student._compiled_pattern_has_underscore.search(lname) is None
+        main_check = Student._COMPILED_PATTERN_FNAME.fullmatch(lname) is not None
 
-        return main_check and has_no_nums and has_no_underscore
+        return main_check
 
     def _check_patronymic(self, patronymic):
         if not isinstance(patronymic, str):
             return False
 
-        main_check = Student._compiled_pattern_fname.fullmatch(patronymic) is not None
-        has_no_nums = Student._compiled_pattern_has_nums.search(patronymic) is None
-        has_no_underscore = Student._compiled_pattern_has_nums.search(patronymic) is None
+        main_check = Student._COMPILED_PATTERN_FNAME.fullmatch(patronymic) is not None
 
-        return main_check and has_no_nums and has_no_underscore
+        return main_check
 
     def _check_ngroup(self, ngroup):
         if not isinstance(ngroup, str):
             return False
 
-        main_check = Student._compiled_pattern_ngroup.fullmatch(ngroup) is not None
-        has_no_underscore = Student._compiled_pattern_has_underscore.search(ngroup) is None
+        main_check = Student._COMPILED_PATTERN_NGROUP.fullmatch(ngroup) is not None
 
-        return main_check and has_no_underscore
+        return main_check
 
     def _check_npass(self, npass):
         if not isinstance(npass, str):
             return False
 
-        main_check = Student._compiled_pattern_npass.fullmatch(npass) is not None
+        main_check = Student._COMPILED_PATTERN_NPASS.fullmatch(npass) is not None
 
         return main_check
 
