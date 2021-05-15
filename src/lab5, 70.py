@@ -1,6 +1,6 @@
 """
 NAME
-    Lab5, 70
+    lab5, 70
 
 DESCRIPTION
     This program prepare the results of students taking the exams of the winter session.

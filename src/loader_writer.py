@@ -1,3 +1,12 @@
+"""
+NAME
+    loader_writer
+
+DESCRIPTION
+    This module contain functions for reading, saving data from file
+    and outputting prepared information to file
+"""
+
 import json
 
 from builder import Builder

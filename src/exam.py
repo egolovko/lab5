@@ -1,3 +1,13 @@
+"""
+NAME
+    exam
+
+DESCRIPTION
+    This module contain class Exam, that contain information about subject
+    and about the students who took this subject.
+"""
+
+
 import re
 
 from student import Student

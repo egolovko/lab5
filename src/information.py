@@ -1,3 +1,11 @@
+"""
+NAME
+    information
+
+DESCRIPTION
+    This module contain class Information, that contain information about exams.
+"""
+
 from exam import Exam
 
 

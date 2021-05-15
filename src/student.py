@@ -1,3 +1,11 @@
+"""
+NAME
+    student
+
+DESCRIPTION
+    This module contain class Student, that contain information about student.
+"""
+
 import re
 
 
