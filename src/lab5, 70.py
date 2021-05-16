@@ -63,8 +63,8 @@ def process(file_path):
 
 
 def _main(args):
-    print(f"This program prepare the results of students taking the exams of the winter session.")
-    print("This program is coded by Holovko Eugene, K-12.")
+    print("This program prepare the results of students taking the exams of the winter session.")
+    print("This program is coded by Holovko Eugene, K-12. Variant 70.")
     print("*****")
 
     try:
