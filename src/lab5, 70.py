@@ -57,7 +57,7 @@ def process(file_path):
 
     try:
         _process(file_path)
-    except Exception as exc:
+    except BaseException as exc:
         print("UPS")
         raise exc
 
@@ -69,7 +69,7 @@ def _main(args):
 
     try:
         process(args[1])
-    except Exception as exc:
+    except BaseException as exc:
         print("***** program aborted *****")
         print(exc)
 
