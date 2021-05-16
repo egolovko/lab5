@@ -53,6 +53,9 @@ def process(file_path):
 
     FileNotFoundError:
         File not exist
+
+    LookupError
+        Invalid encoding
     """
 
     try:
@@ -71,7 +74,7 @@ def _main(args):
         process(args[1])
     except BaseException as exc:
         print("***** program aborted *****")
-        print(exc)
+        print(type(exc), exc)
 
 
 if __name__ == "__main__":
