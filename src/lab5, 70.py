@@ -60,7 +60,7 @@ def process(file_path):
 
     try:
         _process(file_path)
-    except BaseException as exc:
+    except Exception as exc:
         print("UPS")
         raise exc
 
