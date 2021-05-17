@@ -67,6 +67,12 @@ class Exam:
 
     @property
     def subject(self):
+        """
+        Returns
+        -------
+        str
+            Name of exam subject.
+        """
         return self._subject
 
     def load(self, score, total_score_100, total_score_5, ngroup, lname, fname, patronymic, npass):

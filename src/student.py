@@ -57,7 +57,6 @@ class Student:
         Exam scores. Can not exceed 40 and must be positive. The scores scored on the exam must be at
         least 24 or equal to 0 (in the latter case, the assessment cannot be satisfactory).
 
-
     total_score_100 : int
         Sum of points scored in the semester and in the exam.
         Can not exceed 100 and must be positive.
@@ -106,34 +105,82 @@ class Student:
 
     @property
     def npass(self):
+        """
+        Returns
+        -------
+        str
+            Student pass number.
+        """
         return self._npass
 
     @property
     def ngroup(self):
+        """
+        Returns
+        -------
+        str
+            Number of group.
+        """
         return self._ngroup
 
     @property
     def fname(self):
+        """
+        Returns
+        -------
+        str
+            First name.
+        """
         return self._fname
 
     @property
     def lname(self):
+        """
+        Returns
+        -------
+        str
+            Last name.
+        """
         return self._lname
 
     @property
     def patronymic(self):
+        """
+        Returns
+        -------
+        str
+            Patronymic (Middle name).
+        """
         return self._patronymic
 
     @property
     def score(self):
+        """
+        Returns
+        -------
+        int
+            Exam score.
+        """
         return self._score
 
     @property
     def total_score_100(self):
+        """
+        Returns
+        -------
+        int
+            Exam and practice score of 100 points.
+        """
         return self._total_score_100
 
     @property
     def total_score_5(self):
+        """
+        Returns
+        -------
+        int
+            Exam and practice score of 5 points.
+        """
         return self._total_score_5
 
     def load(self, score, total_score_100, total_score_5, lname, fname, patronymic):

@@ -63,7 +63,7 @@ class Builder:
         storage : information.Information
             Storage where processed lines will be added.
 
-        file : io.TextIOWrapper
+        file : IO
             Binary file.
 
         Raises

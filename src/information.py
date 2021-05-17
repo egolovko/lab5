@@ -61,10 +61,22 @@ class Information:
 
     @property
     def records_count(self):
+        """
+        Returns
+        -------
+        int
+            Total count of records in information.
+        """
         return self._records_count
 
     @property
     def scores_100_count(self):
+        """
+        Returns
+        -------
+        int
+            Count of scores 100.
+        """
         return self._scores_100_count
 
     def clear(self):
