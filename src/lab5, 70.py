@@ -15,6 +15,25 @@ from sys import argv
 from information import Information
 
 
+def _print_description():
+    print("This program is coded by Holovko Eugene, K-12. Variant 70.")
+    print("This program prepare the results of students taking the exams of the winter session.")
+    print("""
+        Обробляються резльтати складання студентами екзаменiв зимовоЁ сесiї.
+        Записи основного файлу мiстять поля: код групи, предмет, прiзвище, сумарна оцiнка в балах за 100-
+        бально системою, набранi на екзаменi бали, iм'я, оцiнка за державно шкалою, по-батьковi, номер
+        залiковоЁ книжки.
+        У допомiжному файлi наявнi ключi: загальна кiлькiсть записiв, кiлькiсть оцiнок 100, SMILE.
+        Знайти предмети з найкращою середньо оцiнкою. Вивести по кожному з них iнформацiю:
+        - на першому рядку:
+            предмет, середня оцiнка (округлений до 1 знаку), кiлькiсть студентiв, що не склали;
+        - на наступних ядках, почина чи з табуляцiЁ, вивести для п едмета студентiв, що от имали з нього 
+        менше 95 балiв (по одному на ядок):
+            прiзвище, iм'я, по-батьковi, номер залiкової книжки, оцiнка в балах, оцiнка за державно шкалою
+            у такому сортуваннi: номер залiкової книжки.
+    """)
+
+
 def _process(file_path):
     storage = Information()
 
@@ -66,12 +85,13 @@ def process(file_path):
 
 
 def _main(args):
-    print("This program prepare the results of students taking the exams of the winter session.")
-    print("This program is coded by Holovko Eugene, K-12. Variant 70.")
+    _print_description()
     print("*****")
 
     try:
         process(args[1])
+    except KeyboardInterrupt as ki:
+        print("\n***** program aborted *****")
     except BaseException as exc:
         print("***** program aborted *****")
         print(type(exc), exc)
