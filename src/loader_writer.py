@@ -48,10 +48,7 @@ def load(storage, csv_file, json_file, encoding="utf-8"):
     stat = load_stat(json_file, encoding)
     print("OK")
 
-    print(f"json?=csv:", end=" ")
-    if not fit(storage, stat):
-        raise ValueError(f"Comparison error")
-    print("OK")
+    return fit(storage, stat)
 
 
 def load_ini(path):

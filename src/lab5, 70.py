@@ -41,12 +41,18 @@ def _process(file_path):
     config = loader_writer.load_ini(file_path)
     print("OK")
 
-    loader_writer.load(
+    is_correct_loading = loader_writer.load(
         storage,
         config["input"]["csv"],
         config["input"]["json"],
         config["input"]["encoding"]
     )
+
+    print(f"json?=csv:", end=" ")
+    if is_correct_loading:
+        print("OK")
+    else:
+        print("UPS")
 
     print(f"output {config['output']['fname']}:", end=" ")
     loader_writer.output(storage, config["output"]["fname"], config["output"]["encoding"])
@@ -84,18 +90,14 @@ def process(file_path):
         raise exc
 
 
-def _main(args):
+def main(args):
     _print_description()
     print("*****")
 
     try:
         process(args[1])
-    except KeyboardInterrupt as ki:
-        print("\n***** program aborted *****")
     except BaseException as exc:
-        print("***** program aborted *****")
-        print(type(exc), exc)
-
+        print("\n***** program aborted *****")
 
 if __name__ == "__main__":
-    _main(argv)
+    main(argv)
