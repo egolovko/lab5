@@ -38,7 +38,7 @@ def _process(file_path):
     storage = Information()
 
     print(f"ini {file_path}:", end=" ")
-    config = loader_writer.load_ini(file_path)
+    config = loader_writer.load_ini(file_path, "utf-8")
     print("OK")
 
     is_correct_loading = loader_writer.load(
@@ -98,6 +98,7 @@ def main(args):
         process(args[1])
     except BaseException as exc:
         print("\n***** program aborted *****")
+
 
 if __name__ == "__main__":
     main(argv)

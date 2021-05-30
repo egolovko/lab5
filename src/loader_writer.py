@@ -51,7 +51,7 @@ def load(storage, csv_file, json_file, encoding="utf-8"):
     return fit(storage, stat)
 
 
-def load_ini(path):
+def load_ini(path, encoding="utf-8"):
     """
     Load the settings file.
 
@@ -71,7 +71,7 @@ def load_ini(path):
         Dictionary with settings data
     """
 
-    with open(path, "r") as ini_file:
+    with open(path, "r", encoding=encoding) as ini_file:
         data = json.load(ini_file)
 
     if not _check_ini_structure(data):
