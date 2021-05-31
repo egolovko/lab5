@@ -55,15 +55,7 @@ class Exam:
         return len(self._students)
 
     def __iter__(self):
-        self.__i = 0
-        return self
-
-    def __next__(self):
-        if self.__i < len(self._students):
-            temp = self._students[self.__i]
-            self.__i += 1
-            return temp
-        raise StopIteration
+        return iter(self._students)
 
     @property
     def subject(self):

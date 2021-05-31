@@ -49,15 +49,7 @@ class Information:
         return len(self._exams)
 
     def __iter__(self):
-        self.__i = 0
-        return self
-
-    def __next__(self):
-        if self.__i < len(self._exams):
-            temp = self._exams[self.__i]
-            self.__i += 1
-            return temp
-        raise StopIteration
+        return iter(self._exams)
 
     @property
     def records_count(self):
